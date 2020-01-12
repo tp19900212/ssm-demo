@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 /**
  * common return
- * @author xuxueli 2015-12-4 16:32:31
+ * @author TP
+ * @date 2019-12-20 14:13
  * @param <T>
  */
 public class ReturnT<T> implements Serializable {

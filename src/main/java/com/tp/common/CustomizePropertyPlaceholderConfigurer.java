@@ -15,9 +15,7 @@ import java.util.Properties;
  * 覆盖了spring的PropertyPlaceholderConfigurer类，主要目的就是为了
  * 可以在代码中直接调用getContextProperty获取属于文件中对应的配置信息
  * Author: TP
- * Project: ssmdemo
- * Version: V1.0
- * Create Date: 16/2/25
+ * Create Date: 2019-12-20 14:13
  */
 public class CustomizePropertyPlaceholderConfigurer extends PropertyPlaceholderConfigurer {
 
