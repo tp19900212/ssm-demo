@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd"
+       default-lazy-init="false">
+
+    <!-- 数据库连接池 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <!-- 数据源驱动类可不写，Druid默认会自动根据URL识别DriverClass -->
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="${jdbc.pool.initialSize}"/>
+        <property name="minIdle" value="${jdbc.pool.minIdle}"/>
+        <property name="maxActive" value="${jdbc.pool.maxActive}"/>
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="${jdbc.pool.maxWait}"/>
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="${jdbc.pool.minEvictableIdleTimeMillis}"/>
+        <property name="validationQuery" value="SELECT 'x' FROM DUAL"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat"/>
+    </bean>
+
+    <!-- sqlSessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 数据库连接池 -->
+        <property name="dataSource" ref="dataSource"/>
+        <!--  Mybatis自身的配置文件，用来对mybatis自身进行配置 （可选）-->
+        <property name="configLocation" value="classpath:config/mybatis-config.xml"/>
+        <!-- 该属性可以给包中的类注册别名，别名即为类名，可以mapper种直接使用别名，注意实体类名别重复，否则生成别名会报错；不支持Ant风格的路径,多个包逗号分隔-->
+        <property name="typeAliasesPackage" value="com.tp.models.entity"/>
+        <!-- mybatis的映射文件，指定实体类映射文件，可以同时指定某一包以及子包下面的所有配置文件
+             Ant通配符 ? 匹配任何单字符，*是个通配符，代表所有的文件，**代表所有目录下 -->
+        <property name="mapperLocations" value="classpath*:mapper/**/*.xml"/>
+        <!-- 配置pageHelper 分页插件 -->
+        <property name="plugins">
+            <set>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <props>
+                            <!--方言 -->
+                            <prop key="helperDialect">mysql</prop>
+                        </props>
+                    </property>
+                </bean>
+            </set>
+        </property>
+    </bean>
+
+    <!-- 配置Mapper扫描器,自动发现mapper接口，生成包下接口的所有代理对象,并且放入spring容器中 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.tp.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+</beans>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 配置placeholder，将此配置放在SpringMvc配置文件中，可以保证Controller中也能使用@value(${xxx}}) -->
+    <!-- 原因：容器中读取的配置文件就是私有的，互相不能访问，也就是说Mvc容器和Spring容器的placeholder都需要在各自的容器中声明才能在各自的容器中使用placeholder -->
+    <context:property-placeholder location="classpath*:*.properties" ignore-unresolvable="true"/>
+
+    <!-- 配置注解扫描,只扫描所有带有@Controller注解的bean -->
+    <!-- use-default-filters属性的默认值为true，即使用默认的Filter进行包扫描，而默认的Filter对标有@Controller，@Service和@Repository的注解的类都进行扫描 -->
+    <!-- 而SpringMVC主要就是来管理网站的跳转逻辑，我们希望所有Controller放在Mvc容器中，所以不用默认Filter而使用指定的Filter -->
+    <context:component-scan base-package="com.tp" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- 开启AOP动态代理，将此配置声明在SpringMvc配置文件中，可以保证Controller中也能使用切面 -->
+    <aop:aspectj-autoproxy proxy-target-class="true" expose-proxy="true"/>
+
+    <!-- 配置视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- mvc注解驱动，以使得访问路径与方法的匹配可以通过注解配置-->
+    <!-- Spring 3.0.x中使用了mvc:annotation-driven后，默认会帮我们注册默认处理请求，参数和返回值的类
+    其中最主要的两个类：DefaultAnnotationHandlerMapping 和 AnnotationMethodHandlerAdapter ，分别为HandlerMapping的实现类和HandlerAdapter的实现类
+    从3.1.x版本开始对应实现类改为了RequestMappingHandlerMapping和RequestMappingHandlerAdapter。
+    HandlerMapping的实现类的作用：
+        实现类RequestMappingHandlerMapping，它会处理@RequestMapping 注解，并将其注册到请求映射表中。
+    HandlerAdapter的实现类的作用：
+        实现类RequestMappingHandlerAdapter，则是处理请求的适配器，确定调用哪个类的哪个方法，并且构造方法参数，返回值。
+    当配置了mvc:annotation-driven/后，Spring就知道了我们启用注解驱动。
+    然后Spring通过context:component-scan/标签的配置，会自动为我们将扫描到的@Component，@Controller，@Service，@Repository等注解标记的组件注册到工厂中，来处理我们的请求-->
+    <mvc:annotation-driven/>
+
+    <!--springMvc拦截器配置-->
+    <!--<mvc:interceptors>
+        <mvc:interceptor>
+            &lt;!&ndash; 拦截所有的请求，这个必须写在前面，也就是写在【不拦截】的上面 &ndash;&gt;
+            <mvc:mapping path="/**" />
+            &lt;!&ndash; 但是排除下面这些，也就是不拦截请求 &ndash;&gt;
+            <mvc:exclude-mapping path="/login/toLogin" />
+            <mvc:exclude-mapping path="/login/doLogin" />
+            <bean class="com.tp.interceptors.UserLoginInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>-->
+</beans>

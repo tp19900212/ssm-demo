@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd"
+       default-lazy-init="false">
+
+    <!-- 加载配置属性文件(采用自定义propertyConfigurer做法，为了可以在代码中直接调用getContextProperty获取属于文件中对应的配置信息) -->
+    <bean id="propertyConfigurer" class="com.tp.common.CustomizePropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath*:/*.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 配置注解扫描,扫描所有带有非@Controller注解的bean -->
+    <context:component-scan base-package="com.tp"><!-- base-package 如果多个用“,”分隔 -->
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!--开启AOP动态代理，使得Spring支持切面-->
+    <aop:aspectj-autoproxy proxy-target-class="true" expose-proxy="true"/>
+
+    <!-- 配置线程池 -->
+    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <!-- 线程池维护线程的核心线程数量 -->
+        <property name="corePoolSize" value="${thread.pool.corePoolSize}"/>
+        <!-- 线程池维护线程的最大线程数量 -->
+        <property name="maxPoolSize" value="${thread.pool.maxPoolSize}"/>
+        <!-- 线程池维护线程所需的空闲时间 -->
+        <property name="keepAliveSeconds" value="${thread.pool.keepAliveSeconds}"/>
+        <!-- 线程池所使用的缓冲队列 -->
+        <property name="queueCapacity" value="${thread.pool.queueCapacity}"/>
+    </bean>
+
+    <!--定义事务管理器（声明式的事务） -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <!-- 开启事务注解@Transactional支持 -->
+    <tx:annotation-driven />
+
+
+    <!--############################ 定时任务使用Quartz方式 ############################-->
+    <!--<bean id="myJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <bean class="com.chainfin.ssmdemo.tasks.QuartzJob"/>
+        </property>
+        <property name="targetMethod" value="task1"/>
+        <property name="concurrent" value="false"/>&lt;!&ndash; 作业不并发调度 &ndash;&gt;
+    </bean>
+
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="cronTrigger"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="myJob"/>
+        <property name="cronExpression" value="*/10 * * * * ?"/>
+    </bean>-->
+
+    <!--############################ 定时任务使用Spring Task的xml配置方式 ############################-->
+    <!--<task:scheduled-tasks>
+        <task:scheduled ref="springTaskJob" method="task1" cron="*/10 * * * * ?"/>
+    </task:scheduled-tasks>
+
+    &lt;!&ndash;############################ 定时任务使用Spring Task的注解配置方式 ############################&ndash;&gt;
+    &lt;!&ndash;开启这个配置，spring才能识别@Scheduled注解&ndash;&gt;
+    <task:annotation-driven/>-->
+
+</beans>

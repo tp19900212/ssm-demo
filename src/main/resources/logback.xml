@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <property name="APP_NAME" value="ssm-demo"/>
+    <contextName>${APP_NAME}</contextName>
+    <!-- 日志级别：trace < debug < info < warn < error（若定义的日志级别为info，则不会打印出 trace和debug的相关日志）-->
+
+    <!-- 定义全局参数常量 -->
+    <property name="log.level" value="debug"/>
+    <!-- 归档日志文件最大的保存历史数量，30表示30个 -->
+    <property name="log.maxHistory" value="30"/>
+    <!-- 日志的存放位置 -->
+    <!-- catalina.base表示tomcat的根路径 -->
+    <property name="log.filePath" value="${catalina.base}/logs/${project.name}"/>
+    <!-- 日志的展现格式 -->
+    <property name="log.pattern" value="%d{yyyy-MM-dd : HH:mm:ss.SSS}[%thread]%-5level%logger{50}-%msg%n"/>
+
+    <!-- 定义appender（日志的输出和存放位置等) -->
+    <!-- 控制台设置 -->
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${log.pattern}</pattern>  <!-- 控制台日志输出格式 -->
+        </encoder>
+    </appender>
+
+    <!-- DEBUG -->
+    <appender name="debugAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 当前日志文件路径 -->
+        <file>${log.filePath}/debug.log</file>
+        <!-- 日志滚动策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 归档日志文件的存放路径和名称 -->
+            <fileNamePattern>${log.filePath}/debug/debug.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <!-- 归档日志文件最大的保存历史数量 -->
+            <maxHistory>${log.maxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>  <!-- 用过滤器，只接受DEBUG级别的日志信息，其余全部过滤掉 -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- INFO -->
+    <appender name="infoAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 文件路径 -->
+        <file>${log.filePath}/info.log</file>
+        <!-- 日志滚动策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 归档日志文件的存放路径和名称 -->
+            <fileNamePattern>${log.filePath}/info/info.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <!-- 归档日志文件最大的保存历史数量 -->
+            <maxHistory>${log.maxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>  <!-- 用过滤器，只接受INFO级别的日志信息，其余全部过滤掉 -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- ERROR-->
+    <appender name="errorAppender" class="ch.qos.logback.core.rolling.RollingFileAppender"><!-- 日志文件会滚动 -->
+        <!-- 文件路径 -->
+        <file>${log.filePath}/error.log</file><!-- 当前的日志文件存放路径 -->
+        <!-- 日志滚动策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"> <!-- TimeBased默认是一天更新一次 -->
+            <!-- 历史日志文件的存放路径和名称 -->
+            <fileNamePattern>${log.filePath}/error/error.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <!-- 日志文件最大的保存历史 数量-->
+            <maxHistory>${log.maxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.pattern}</pattern>  <!-- 日志文件中日志的格式 -->
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>  <!-- 用过滤器，只接受ERROR级别的日志信息，其余全部过滤掉 -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- logger标签用于和appender进行绑定，并告诉logback哪些包（name属性）的日志信息需要记录 -->
+    <!-- logger将会继承root标签 -->
+    <logger name="com.tp" level="${log.level}"/>
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="java.sql" level="DEBUG"/>
+    <!-- ibatis和mybatis配置 -->
+    <logger name="com.ibatis" level="DEBUG"/>
+    <logger name="com.ibatis.common.jdbc.SimpleDataSource" level="DEBUG"/>
+    <logger name="com.ibatis.common.jdbc.ScriptRunner" level="DEBUG"/>
+    <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG"/>
+    <!-- 去掉org包的日志打印，防止日志淹没 -->
+    <logger name="org" level="ERROR"/>
+    <logger name="us.codecraft" level="ERROR"/>
+
+    <root level="info">
+        <appender-ref ref="consoleAppender"/>
+        <appender-ref ref="debugAppender"/>
+        <appender-ref ref="infoAppender"/>
+        <appender-ref ref="errorAppender"/>
+    </root>
+
+</configuration>
