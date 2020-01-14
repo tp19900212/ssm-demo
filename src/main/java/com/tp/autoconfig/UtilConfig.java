@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
  * FileName: UtilConfig
  * Author:   TP
  * Date:     2019-12-11 23:38
- * Description:
+ * Description:JavaConfig方式声明SpringContextHolder
  */
 @Configuration
 public class UtilConfig {

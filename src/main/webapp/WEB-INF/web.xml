@@ -43,25 +43,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!--filter培训测试demo-->
-    <!--<filter>
-        <filter-name>demoFilter</filter-name>
-        <filter-class>com.tp.filters.DemoFilter</filter-class>
-        <init-param>
-            <param-name>encoding</param-name>
-            <param-value>UTF-8</param-value>
-        </init-param>
-        <init-param>
-            <param-name>forceEncoding</param-name>
-            <param-value>true</param-value>
-        </init-param>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>demoFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>-->
-
     <!-- SpringMvc的前端控制器 -->
     <servlet>
         <servlet-name>SpringMvc</servlet-name>
@@ -105,31 +86,6 @@
         <url-pattern>*.woff</url-pattern>
     </servlet-mapping>
 
-    <!-- 注册针对ServletContext对象进行监听的监听器 -->
-    <!--<listener>
-        <description>ServletContextListener监听器</description>
-        &lt;!&ndash;实现了ServletContextListener接口的监听器类 &ndash;&gt;
-        <listener-class>com.tp.listeners.MyServletContextListener</listener-class>
-    </listener>-->
-
-    <!--注册针对HttpSession对象进行监听的监听器-->
-    <!--<listener>
-        <description>HttpSessionListener监听器</description>
-        <listener-class>com.tp.listeners.MyHttpSessionListener</listener-class>
-    </listener>-->
-
-    <!--注册针对ServletRequest对象进行监听的监听器-->
-    <!--<listener>
-        <description>ServletRequestListener监听器</description>
-        <listener-class>com.tp.listeners.MyServletRequestListener</listener-class>
-    </listener>-->
-
-    <!--注册针对ServletContextAttribute进行监听的监听器-->
-    <!--<listener>
-        <description>MyServletContextAttributeListener监听器</description>
-        <listener-class>com.tp.listeners.MyServletContextAttributeListener</listener-class>
-    </listener>-->
-
     <!-- 错误页面定义/欢迎页定义 -->
     <error-page>
         <error-code>500</error-code>
@@ -146,9 +102,9 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-    <!-- 配置HttpSession对象的销毁时机 -->
+
+    <!-- 配置session存活时间，单位为分钟 -->
     <session-config>
-        <!--配置HttpSession对象的10分钟之后销毁 -->
         <session-timeout>10</session-timeout>
     </session-config>
 </web-app>

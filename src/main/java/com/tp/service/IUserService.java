@@ -6,7 +6,7 @@ import com.tp.models.entity.User;
  * FileName: IUserService
  * Author:   TP
  * Date:     2020-01-10 14:09
- * Description:
+ * Description:用户服务
  */
 public interface IUserService {
 

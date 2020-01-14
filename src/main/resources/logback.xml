@@ -2,9 +2,9 @@
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
     <property name="APP_NAME" value="ssm-demo"/>
     <contextName>${APP_NAME}</contextName>
-    <!-- 日志级别：trace < debug < info < warn < error（若定义的日志级别为info，则不会打印出 trace和debug的相关日志）-->
 
     <!-- 定义全局参数常量 -->
+    <!-- 日志级别：trace < debug < info < warn < error（若定义的日志级别为info，则不会打印出 trace和debug的相关日志）-->
     <property name="log.level" value="debug"/>
     <!-- 归档日志文件最大的保存历史数量，30表示30个 -->
     <property name="log.maxHistory" value="30"/>
@@ -15,14 +15,14 @@
     <property name="log.pattern" value="%d{yyyy-MM-dd : HH:mm:ss.SSS}[%thread]%-5level%logger{50}-%msg%n"/>
 
     <!-- 定义appender（日志的输出和存放位置等) -->
-    <!-- 控制台设置 -->
+    <!-- 控制台appender -->
     <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>${log.pattern}</pattern>  <!-- 控制台日志输出格式 -->
         </encoder>
     </appender>
 
-    <!-- DEBUG -->
+    <!-- DEBUG级别FileAppender -->
     <appender name="debugAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 当前日志文件路径 -->
         <file>${log.filePath}/debug.log</file>
@@ -43,7 +43,7 @@
         </filter>
     </appender>
 
-    <!-- INFO -->
+    <!-- INFO级别FileAppender -->
     <appender name="infoAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 文件路径 -->
         <file>${log.filePath}/info.log</file>
@@ -64,7 +64,7 @@
         </filter>
     </appender>
 
-    <!-- ERROR-->
+    <!-- ERROR级别FileAppender -->
     <appender name="errorAppender" class="ch.qos.logback.core.rolling.RollingFileAppender"><!-- 日志文件会滚动 -->
         <!-- 文件路径 -->
         <file>${log.filePath}/error.log</file><!-- 当前的日志文件存放路径 -->

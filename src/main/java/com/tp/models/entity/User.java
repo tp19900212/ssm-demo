@@ -7,8 +7,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
+/**
+ * FileName: User
+ * Author:   TP
+ * Date:     2020-01-12 03:04
+ * Description: 用户信息实体类
+ */
 @Data
-@NoArgsConstructor
 @ToString(callSuper = true)
 public class User extends BaseEntity {
     private static final long serialVersionUID = 4214164189353864912L;

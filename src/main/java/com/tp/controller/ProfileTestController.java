@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * FileName: ProfileTestController
  * Author:   TP
  * Date:     2020-01-12 00:23
- * Description:
+ * Description:Maven环境配置测试控制器
  */
 @Controller
 @ResponseBody

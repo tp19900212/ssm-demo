@@ -13,8 +13,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id
-        ,
+        id,
         user_name,
         pass_word,
         sex,

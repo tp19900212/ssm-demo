@@ -5,9 +5,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Cookie.Util
- *
- * @author TP 2015-12-12 18:01:06
+ * FileName: User
+ * Author:   TP
+ * Date:     2020-01-12 03:04
+ * Description: 操作Cookie的工具类
  */
 public class CookieUtil {
 

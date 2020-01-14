@@ -9,7 +9,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 /**
- * FileName: RequestBtimsAspect
+ * FileName: UserOperationAspect
  * Author:   TP
  * Date:     2019-11-04 12:51
  * Description:SpringAop测试
@@ -36,7 +36,7 @@ public class UserOperationAspect {
      */
     @Before("getUser() && args(id)")
     public void controllerGetUser(Integer id) {
-        log.info(">>>>进入Controller切面：前置通知，请求参数id为{}", id);
+        log.info(">>>>织入Controller：前置通知，请求参数id为{}", id);
     }
 
     /**
@@ -46,7 +46,7 @@ public class UserOperationAspect {
      */
     @Before("serviceGetById() && args(id)")
     public void getUserBefore(Integer id) {
-        log.info(">>>>进入Service切面：前置通知，请求参数id为{}", id);
+        log.info(">>>>织入Service：前置通知，请求参数id为{}", id);
     }
 
     /**
@@ -57,6 +57,6 @@ public class UserOperationAspect {
      */
     @AfterReturning(pointcut = "serviceGetById() && args(id)", returning = "user")
     public void getUserAfterReturning(Integer id, User user) {
-        log.info(">>>>进入Service切面：返回通知，请求参数id为{}，响应结果User信息为：{}", id, user);
+        log.info(">>>>织入Service：返回通知，请求参数id为{}，响应结果User信息为：{}", id, user);
     }
 }
