@@ -47,7 +47,7 @@
     <!--<bean id="myJob"
           class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject">
-            <bean class="com.chainfin.ssmdemo.tasks.QuartzJob"/>
+            <bean class="com.tp.quartz.QuartzJob"/>
         </property>
         <property name="targetMethod" value="task1"/>
         <property name="concurrent" value="false"/>&lt;!&ndash; 作业不并发调度 &ndash;&gt;
