@@ -47,8 +47,8 @@
             &lt;!&ndash; 拦截所有的请求，这个必须写在前面，也就是写在【不拦截】的上面 &ndash;&gt;
             <mvc:mapping path="/**" />
             &lt;!&ndash; 但是排除下面这些，也就是不拦截请求 &ndash;&gt;
-            <mvc:exclude-mapping path="/login/toLogin" />
-            <mvc:exclude-mapping path="/login/doLogin" />
+            <mvc:exclude-mapping path="/toLogin" />
+            <mvc:exclude-mapping path="/doLogin" />
             <bean class="com.tp.interceptors.UserLoginInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>-->

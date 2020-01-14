@@ -25,7 +25,7 @@ public class UserLoginInterceptor extends HandlerInterceptorAdapter {
         String userName = (String) request.getSession().getAttribute(LoginConstants.LOGIN_KEY);
         if (StringUtils.isEmpty(userName)) {
             //说明没有登录
-            response.sendRedirect(request.getContextPath() + "/login/toLogin");
+            response.sendRedirect(request.getContextPath() + "/toLogin");
             return false;
         }
         return super.preHandle(request, response, handler);

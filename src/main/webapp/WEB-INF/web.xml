@@ -99,9 +99,6 @@
         <error-code>403</error-code>
         <location>/WEB-INF/views/errorPage/page_403.jsp</location>
     </error-page>
-    <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
-    </welcome-file-list>
 
     <!-- 配置session存活时间，单位为分钟 -->
     <session-config>
