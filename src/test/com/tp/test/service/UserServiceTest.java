@@ -20,6 +20,10 @@ public class UserServiceTest extends BaseTestCase {
 
     @Test
     public void testGetUserById() {
+
+        System.out.println(applicationContext);
+        System.out.println(applicationContext.getBean("accountServiceImpl"));
+
         Integer id = 1;
         User user = userService.getById(id);
         System.out.println(">>>>>>" + JSON.toJSONString(user));
