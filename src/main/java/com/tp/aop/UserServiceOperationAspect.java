@@ -12,31 +12,18 @@ import org.springframework.stereotype.Component;
  * FileName: UserServiceOperationAspect
  * Author:   TP
  * Date:     2019-11-04 12:51
- * Description:SpringAop测试
+ * Description:SpringAop-Service层切面测试
  */
 @Slf4j
 @Aspect
 @Component
 public class UserServiceOperationAspect {
 
-    //测试UserService中的切点
+    /**
+     * 切点定义
+     */
     @Pointcut("execution(* com.tp.service.IUserService.getById(..))")
     public void serviceGetById() {
-    }
-
-    //测试UserController中的切点
-    @Pointcut("execution(* com.tp.controller.UserController.getUser(..))")
-    public void getUser() {
-    }
-
-    /**
-     * 测试controller请求前
-     *
-     * @param id 用户主键ID
-     */
-    @Before("getUser() && args(id)")
-    public void controllerGetUser(Integer id) {
-        log.info(">>>>织入Controller：前置通知，请求参数id为{}", id);
     }
 
     /**
