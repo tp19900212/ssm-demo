@@ -72,9 +72,13 @@ public class UserServiceOperationAspect {
     }
 
     /**
-     * 环绕通知
+     * 测试service返回通知
+     * 需要注意的是，对于环绕通知必须给一个ProceedingJoinPoint参数，并且放在参数的第一位
+     * 方法体中必须调用proceedingJoinPoint.proceed()方法，否则会阻塞目标方法的执行
      *
      * @param proceedingJoinPoint proceedingJoinPoint
+     * @param id                  请求参数id
+     * @return 返回值，这里要注意，Around通知返回值不要写成void(除非目标方法返回值为void)，否则最终返回结果为void
      */
     @Around("serviceGetById() && args(id)")
     public Object getUserAround(ProceedingJoinPoint proceedingJoinPoint, Integer id) {
@@ -83,7 +87,7 @@ public class UserServiceOperationAspect {
             log.info(">>>>AOP-Service：环绕通知-开始，请求参数id为{}", id);
             result = proceedingJoinPoint.proceed();
             log.info(">>>>AOP-Service：环绕通知-结束，请求参数id为{}", id);
-        }catch (Throwable e){
+        } catch (Throwable e) {
             log.info(">>>>AOP-Service：环绕通知，请求参数id为{}，执行失败，异常信息：", e);
         }
         return result;
