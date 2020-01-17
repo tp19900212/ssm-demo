@@ -9,7 +9,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 /**
- * FileName: UserOperationAspect
+ * FileName: UserServiceOperationAspect
  * Author:   TP
  * Date:     2019-11-04 12:51
  * Description:SpringAop测试
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Aspect
 @Component
-public class UserOperationAspect {
+public class UserServiceOperationAspect {
 
     //测试UserService中的切点
     @Pointcut("execution(* com.tp.service.IUserService.getById(..))")
