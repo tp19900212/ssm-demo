@@ -26,5 +26,9 @@ public interface IUserService {
      */
     int saveUser(User user);
 
+    /**
+     * 获取Maven生效的环境信息
+     * @return 环境信息
+     */
     String getEnv();
 }
