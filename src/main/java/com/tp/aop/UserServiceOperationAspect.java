@@ -81,15 +81,10 @@ public class UserServiceOperationAspect {
      * @return 返回值，这里要注意：Around通知返回值不要写成void(除非目标方法返回值为void)，否则最终返回结果为void
      */
     @Around("serviceGetById() && args(id)")
-    public Object getUserAround(ProceedingJoinPoint proceedingJoinPoint, Integer id) {
-        Object result = null;
-        try {
-            log.info(">>>>AOP-Service：环绕通知-开始，请求参数id为{}", id);
-            result = proceedingJoinPoint.proceed();
-            log.info(">>>>AOP-Service：环绕通知-结束，请求参数id为{}", id);
-        } catch (Throwable e) {
-            log.info(">>>>AOP-Service：环绕通知，请求参数id为{}，执行失败，异常信息：", e);
-        }
+    public Object getUserAround(ProceedingJoinPoint proceedingJoinPoint, Integer id) throws Throwable{
+        log.info(">>>>AOP-Service：环绕通知-开始，请求参数id为{}", id);
+        Object result = proceedingJoinPoint.proceed();
+        log.info(">>>>AOP-Service：环绕通知-结束，请求参数id为{}", id);
         return result;
     }
 
