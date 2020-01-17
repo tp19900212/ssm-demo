@@ -31,7 +31,7 @@ public class UserControllerOperationAspect {
      */
     @Before("getUser() && args(id)")
     public void controllerGetUser(Integer id) {
-        log.info(">>>>织入Controller：前置通知，请求参数id为{}", id);
+        log.info(">>>>AOP-Controller：前置通知，请求参数id为{}", id);
     }
 
 }
