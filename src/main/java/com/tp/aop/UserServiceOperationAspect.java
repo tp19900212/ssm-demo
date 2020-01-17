@@ -72,7 +72,7 @@ public class UserServiceOperationAspect {
     }
 
     /**
-     * 测试service返回通知
+     * 测试service环绕通知
      * 需要注意的是，对于环绕通知必须给一个ProceedingJoinPoint参数，并且放在参数的第一位
      * 方法体中必须调用proceedingJoinPoint.proceed()方法，否则会阻塞目标方法的执行
      *
