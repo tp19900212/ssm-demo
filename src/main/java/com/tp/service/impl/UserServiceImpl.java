@@ -43,7 +43,7 @@ public class UserServiceImpl implements IUserService {
         if (null != user) {
             user.setCreateTime(new Date());
             int i = userMapper.saveUser(user);
-            // 测试Spring事物事物
+            // 测试Spring声明式事物
             // i = 2/0;
             return i;
         }

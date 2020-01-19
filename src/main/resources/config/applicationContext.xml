@@ -40,7 +40,7 @@
         <property name="dataSource" ref="dataSource" />
     </bean>
     <!-- 开启事务注解@Transactional支持 -->
-    <tx:annotation-driven />
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
 
     <!--############################ 定时任务使用Quartz方式 ############################-->
