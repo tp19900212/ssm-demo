@@ -20,7 +20,7 @@
         <standard-version>1.1.2</standard-version>
         <lombok-veresion>1.18.4</lombok-veresion>
         <druid-version>1.1.21</druid-version>
-        <spring-version>5.2.2.RELEASE</spring-version>
+        <spring-version>6.0.0</spring-version>
         <aopalliance-version>1.0</aopalliance-version>
         <jackson-mapper-version>1.9.13</jackson-mapper-version>
         <jackson-core-version>2.10.1</jackson-core-version>
